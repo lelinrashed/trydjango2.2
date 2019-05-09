@@ -1,3 +1,5 @@
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -13,12 +15,16 @@ def blog_post_list_view(request):
     return render(request, template_name, context)
 
 
+# @login_required
+@staff_member_required
 def blog_post_create_view(request):
     # create objects
     # ? use a form
     form = BlogPostModelForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        obj = form.save(commit=False)
+        obj.user = request.user
+        obj.save()
         form = BlogPostModelForm()
     template_name = 'blog/create.html'
     context = {'form': form}
