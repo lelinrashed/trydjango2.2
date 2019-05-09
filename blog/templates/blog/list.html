@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head_title %}
+    Blog list
+{% endblock %}
+
 {% block content %}
 <ul class="list-group">
     {% for object in object_list %}
