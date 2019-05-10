@@ -7,7 +7,7 @@
 {% block content %}
 <ul class="list-group">
     {% for object in object_list %}
-    <li class="list-group-item">{{ object.title }}</li>
+    <li class="list-group-item"><a href="{{object.get_absolute_url}}">{{ object.title }}</a></li>
     {% endfor %}
 </ul>
 

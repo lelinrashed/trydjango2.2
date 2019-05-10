@@ -12,7 +12,7 @@ Create new blog
 
 <div class="card mt-5">
     <div class="card-body">
-        <form method="post" action="/blog-new/">
+        <form method="post" action=".">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Send</button>
