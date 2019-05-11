@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
+
+<div class="col-12 col-md-12 mx-auto">
+{% include "blog/list-inline.html" with blog_post=object truncate=False detail=True %}
 
 {% if request.user.is_authenticated %}
     {% if request.user.is_staff %}
@@ -10,5 +11,6 @@
         <a class="btn btn-sm btn-danger" href="{{ object.get_delete_url }}">Delete</a>
     {% endif %}
 {% endif %}
+</div>
 
 {% endblock %}

@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content %}
-<ul class="list-group">
+<div class="row">
     {% for object in object_list %}
-    <li class="list-group-item"><a href="{{object.get_absolute_url}}">{{ object.title }}</a></li>
+        {% include "blog/list-inline.html" with blog_post=object truncate=True detail=False %}
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}

@@ -4,13 +4,11 @@
 
 {% block content %}
 
-    {{ title }}
+    <h1 class="text-center mb-4">{{ title }}</h1>
 
-    {{ user }}
-
-
-
-    {{ user.is_authenticated }}
+    {% for blog in blog_list %}
+        {% include "blog/list-inline.html" with blog_post=blog truncate=True detail=False %}
+    {% endfor %}
 
 {% endblock %}
 
