@@ -1,15 +1,18 @@
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
+
 from blog.forms import BlogPostModelForm
 from blog.models import BlogPost
 
 def blog_post_list_view(request):
     # List out objects
-    # ? could be search
-    qs = BlogPost.objects.all()
+    # ? could be searches
+    qs = BlogPost.objects.all().published()
+    if request.user.is_authenticated:
+        my_qs = BlogPost.objects.filter(user=request.user)
+        qs = (qs | my_qs).distinct()
     template_name = 'blog/list.html'
     context = {'object_list': qs}
     return render(request, template_name, context)
@@ -20,7 +23,7 @@ def blog_post_list_view(request):
 def blog_post_create_view(request):
     # create objects
     # ? use a form
-    form = BlogPostModelForm(request.POST or None)
+    form = BlogPostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
